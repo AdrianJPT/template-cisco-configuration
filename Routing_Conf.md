@@ -17,7 +17,7 @@ router ospf 1
 network x.x.x.x wildcard area x
 network 10.20.20.0 0.0.0.3 area 0
 router-id 1.1.1.1                   #UNIQUE IDENTIFIER FOR THE ROUTER
-** #no auto-summary by default (OSPF doesn't support auto-summary) **
+**#no auto-summary by default (OSPF doesn't support auto-summary)**
 
 ##### EIGRP #####
 
