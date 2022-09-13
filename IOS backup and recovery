@@ -1,0 +1,19 @@
+# TE QUEDASTE BOTADO SIN LA CONTRASEÑA
+
+no service password-recovery    # PARA QUE NO SEA POSIBLE LA RECUPERACION, NI POR ROMMON
+
+
+
+entrar en modo ROMMON :
+1.- Desconectar y conectar (cuando bootea presionar "ctrl + c/pause ")
+2.- # confreg 0x2142    # por default es 0x2102, luego volver el valor a su default
+3.- # reset 
+4.- cp startup running
+5.- configure a new password
+6.- enable all the interfaces
+7.- confreg 0x2102 or config-register
+8.- wr    # guardar la configuracion
+
+
+username ADRIAN alg
+
