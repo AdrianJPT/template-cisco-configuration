@@ -1,0 +1,99 @@
+ena
+conft
+enable secret 1234
+username admin secret 1234
+aaa new-model
+aaa auth login default local
+aaa auth login TELNET-LOGIN local
+line con 0
+login auth TELNET-LOGIN
+
+
+host R1
+enable secret 1234
+username admin secret 1234
+aaa new-model
+radius-server host 10.10.10.5
+
+radius-server key abcd
+
+aaa authentication login default group radius local
+
+line con 0 
+login auth default
+exit
+
+
+####### TACACS
+
+ena
+conf t
+host R2
+enable secret 1234
+username admin secret 1234
+tacacs-server host x.x.x.x 
+tacacs-server key abcd
+aaa new-model
+aaa auth login default group tacacs+ local
+
+line con 0
+login auth default 
+
+
+----------------------------------
+IPS
+-----------------
+
+ena
+show ver (active security package)
+license boot module c1900 technolo securityk9
+do reload
+
+
+
+mkdir ipsdir
+ip ips config location ipsdir
+
+
+ip ips name iosips
+ip ips signature-category
+category all
+retire true
+exit
+
+catergory ios_ips basic
+retired false
+exit
+
+exit
+
+inter	g0/0
+ip ips iosips out
+
+
+---- for logging---
+logging host x.x.x.x
+service timestamps log datetime msec
+
+
+
+ip ips signature-definition
+signature 2004 0
+status
+retire false
+enabled true
+exit
+
+engine
+event-action produce-alert
+event-action deny-packet-inline
+exit
+
+exit
+
+exit
+
+do show ip ips all 
+
+
+
