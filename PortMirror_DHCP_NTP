@@ -1,0 +1,49 @@
+
+---------------------------------------------------------
+              Port Mirroring
+---------------------------------------------------------
+
+
+conf t
+interface 
+load-interval 30
+exit
+!
+monitor session {1} source interface {fastethernet0}
+monitor session {1} destination interface {fastethernet1}
+
+show monitor session {1}
+
+
+---------------------------------------------------------
+               DHCP on a router
+---------------------------------------------------------
+
+conf t
+!
+ip dhcp excluded-address {{ range ip from = x.x.x.x }} {{ range ip until = x.x.x.x }}
+ip dhcp pool {{ WHATEVER NAME! }}
+default-router {{ your gateway ip duh }}
+dns-server {{ 8.8.8.8 }} {{ 8.8.4.4 }}
+network {{ your network x.x.x.x }} {{ mask x.x.x.x}}
+
+
+---------------------------------------------------------
+                NTP Configuration
+---------------------------------------------------------
+** set date **
+show clock
+clock set 00:55:30 1 SEP 2022
+!
+conf terminal
+ntp master 3            # 3 is the stratum-number
+
+** set ntp client **
+ntp server X.X.X.X              # the IP of the server
+ntp update-calendar
+
+do show ntp associations
+do debug ntp all
+undebug all
+
+---------------------------------------------------------
